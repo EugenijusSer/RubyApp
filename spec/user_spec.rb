@@ -23,6 +23,20 @@ describe User do
       expect(user.already_exists?('john')).to eq false
     end
   end
+
+  context 'user info validation' do
+    it 'warns if there is spaces in username' do
+      expect { user.create('bo b', 'west') }.to raise_error(
+        ArgumentError, 'No spaces allowed in username!'
+      )
+    end
+
+    it 'warns if there is spaces in password' do
+      expect { user.create('bob', 'w e st') }.to raise_error(
+        ArgumentError, 'No spaces allowed in password!'
+      )
+    end
+  end
 end
 
 # open('users.yml', 'w').write ''

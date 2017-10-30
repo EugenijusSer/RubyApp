@@ -8,7 +8,7 @@ describe Feedback do
 
   context 'rating' do
     it 'average rating has initial 0 value' do
-      expect(feedback.average_rating).to be(0)
+      expect(feedback.average_rating).to be(0.0)
     end
 
     it 'can be added to ratings list' do

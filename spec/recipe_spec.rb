@@ -17,7 +17,7 @@ describe Recipe do
 
     it 'raises error when trying to change to not a number' do
       expect { recipe.change_servings('a') }.to raise_error(
-        'Only numbers allowed!'
+        ArgumentError, 'Only numbers allowed!'
       )
     end
 
@@ -38,7 +38,9 @@ describe Recipe do
 
   context 'feedback' do
     it 'average rating can be displayed' do
-      expect { recipe.display_average_rating }.to output("0\n").to_stdout
+      recipe.feedback.add_rating(5)
+      recipe.feedback.add_rating(1)
+      expect { recipe.display_average_rating }.to output("3.0\n").to_stdout
     end
   end
 

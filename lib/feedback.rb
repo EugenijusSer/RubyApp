@@ -4,7 +4,7 @@ class Feedback
 
   def initialize
     @ratings = []
-    @average_rating = 0
+    @average_rating = 0.0
     @comments = []
   end
 

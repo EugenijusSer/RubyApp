@@ -1,3 +1,4 @@
+require_relative 'feedback'
 # This class is responsible for working with recipe
 class Recipe
   attr_reader :nutrition, :servings, :ingredients,
@@ -17,7 +18,10 @@ class Recipe
   end
 
   def change_servings(servings)
-    raise 'Only numbers allowed!' unless servings.instance_of? Integer
+    unless servings.instance_of? Integer
+      raise ArgumentError,
+            'Only numbers allowed!'
+    end
     @servings = servings
   end
 
@@ -43,6 +47,6 @@ class Recipe
   end
 
   def display_average_rating
-    puts feedback.average_rating
+    puts feedback.calculate_average_rating
   end
 end

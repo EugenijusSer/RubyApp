@@ -12,7 +12,7 @@ class User
 
   def create(username, password)
     @user_info = UserInfo.new(username, password)
-
+    validate_user_info
     if already_exists?(username)
       puts 'User with this username already exists'
     else
@@ -25,6 +25,13 @@ class User
       return true if user.username.eql?(username)
     end
     false
+  end
+
+  def validate_user_info
+    raise ArgumentError, 'No spaces allowed in username!' if
+    user_info.username.include? ' '
+    raise ArgumentError, 'No spaces allowed in password!' if
+    user_info.password.include? ' '
   end
 end
 

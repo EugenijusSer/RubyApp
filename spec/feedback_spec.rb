@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe Feedback do
-  before do
-    @feedback = described_class.new
-  end
   let(:feedback) { described_class.new }
 
   context 'rating' do

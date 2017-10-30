@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe Recipe do
-  before do
-    @recipe = described_class.new
-  end
   let(:recipe) { described_class.new }
 
   context 'servings' do

@@ -2,7 +2,7 @@ require_relative 'recipe'
 require 'yaml'
 # Class responsible for user creating, loging in, etc.
 class User
-  attr_reader :user_info, :users, :log_in
+  attr_reader :user_info, :users, :log_in, :recipes
 
   # contains user name and password
   UserInfo = Struct.new :username, :password
@@ -10,6 +10,7 @@ class User
   def initialize
     @users = []
     @log_in = false
+    @recipes = []
   end
 
   def create(username, password)
@@ -66,4 +67,14 @@ class User
   def load
     @users = YAML.load_file('users.yml')
   end
+
+  def add_recipe(id, name)
+    recipes.push(id: id, name: name)
+  end
+
+  def add_nutrition(fat, carbs, protein)
+    recipes[-1][:recipe] = Recipe.new(fat, carbs, protein)
+  end
+
+  
 end

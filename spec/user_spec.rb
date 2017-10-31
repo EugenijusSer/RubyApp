@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'fileutils'
 
 describe User do
   let(:user) { described_class.new }
@@ -70,10 +71,31 @@ describe User do
       expect(user.log_in).to eq true
     end
   end
-end
 
-# open('users.yml', 'w').write ''
-#     user.change_name('bob')
-#    user.change_pass('easy')
-#   user.create
-#  expect(File.read('users.yml')).to match 'bob easy'
+  context 'users' do
+    before do
+      user.clear_user_list
+      user.create('bobby', 'house')
+      user.create('john', 'wall')
+      user.create('abc', 'def')
+      open('users.yml', 'w+').write('')
+      user.save
+    end
+
+    it 'can be saved to file users.yml' do
+      expect(FileUtils.identical?('users.yml', 'expected_users.yml')).to be true
+    end
+
+    it 'clears user list before tests' do
+      user.clear_user_list
+      expect(user.users).to eq []
+    end
+
+    it 'can be loaded from file users.yml' do
+      user.clear_user_list
+      user.load
+      expected_users = YAML.load_file('expected_users.yml')
+      expect(user.users).to eq expected_users
+    end
+  end
+end

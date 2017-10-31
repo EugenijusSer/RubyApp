@@ -98,4 +98,20 @@ describe User do
       expect(user.users).to eq expected_users
     end
   end
+
+  context 'recipe' do
+    before do
+      user.add_recipe('re243234', 'sandwich')
+    end
+    it 'can add id and name' do
+      expect(user.recipes[0]).to eq(id: 're243234', name: 'sandwich')
+    end
+
+    it 'can add nutrition' do
+      user.add_nutrition(20, 50, 30)
+      expect(user.recipes[0]).to have_correct_recipe_values(
+        're243234', 'sandwich', 20, 50, 30
+      )
+    end
+  end
 end

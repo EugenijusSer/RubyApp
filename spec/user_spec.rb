@@ -113,5 +113,12 @@ describe User do
         're243234', 'sandwich', 20, 50, 30
       )
     end
+
+    it 'can all be displayed' do
+      user.add_recipe('uiw2323', 'cake')
+      expect { user.display_recipes }.to output(
+        "re243234\nsandwich\nuiw2323\ncake\n"
+      ).to_stdout
+    end
   end
 end

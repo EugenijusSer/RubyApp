@@ -23,7 +23,7 @@ class User
   end
 
   def already_exists?(username)
-    users.map do |user|
+    users.each do |user|
       return true if user.username.eql?(username)
     end
     false
@@ -47,10 +47,23 @@ class User
   end
 
   def find_user(username)
-    users.map do |user|
+    users.each do |user|
       return true if user.username.eql?(username)
     end
     false
   end
 
+  def clear_user_list
+    @users = []
+  end
+
+  def save
+    File.open('users.yml', 'w') do |file|
+      file.puts(users.to_yaml)
+    end
+  end
+
+  def load
+    @users = YAML.load_file('users.yml')
+  end
 end

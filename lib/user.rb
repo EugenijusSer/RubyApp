@@ -76,5 +76,10 @@ class User
     recipes[-1][:recipe] = Recipe.new(fat, carbs, protein)
   end
 
-  
+  def display_recipes
+    recipes.each do |item|
+      puts item.fetch(:id)
+      puts item.fetch(:name)
+    end
+  end
 end

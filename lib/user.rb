@@ -1,13 +1,15 @@
 require_relative 'recipe'
+require 'yaml'
 # Class responsible for user creating, loging in, etc.
 class User
-  attr_reader :user_info, :users
+  attr_reader :user_info, :users, :log_in
 
   # contains user name and password
   UserInfo = Struct.new :username, :password
 
   def initialize
     @users = []
+    @log_in = false
   end
 
   def create(username, password)
@@ -21,7 +23,7 @@ class User
   end
 
   def already_exists?(username)
-    users.map! do |user|
+    users.map do |user|
       return true if user.username.eql?(username)
     end
     false
@@ -33,8 +35,22 @@ class User
     raise ArgumentError, 'No spaces allowed in password!' if
     user_info.password.include? ' '
   end
-end
 
-# File.open('users.yml', 'a') do |file|
-#       file.puts(input)
-#    end
+  def login(username, password)
+    @user_info = UserInfo.new(username, password)
+    if find_user(username)
+      raise ArgumentError, 'Wrong password!' unless users.include? user_info
+      @log_in = true
+    else
+      puts 'There is no such user registered'
+    end
+  end
+
+  def find_user(username)
+    users.map do |user|
+      return true if user.username.eql?(username)
+    end
+    false
+  end
+
+end

@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'fileutils'
-
 describe User do
   let(:user) { described_class.new }
 
@@ -83,7 +82,8 @@ describe User do
     end
 
     it 'can be saved to file users.yml' do
-      expect(FileUtils.identical?('users.yml', 'expected_users.yml')).to be true
+      actual = 'users.yml'
+      expect(actual).to be_identical_file_as('expected_users.yml')
     end
 
     it 'clears user list before tests' do

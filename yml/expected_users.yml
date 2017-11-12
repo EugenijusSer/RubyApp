@@ -1,0 +1,10 @@
+---
+- !ruby/struct:User::UserInfo
+  username: bobby
+  password: house
+- !ruby/struct:User::UserInfo
+  username: john
+  password: wall
+- !ruby/struct:User::UserInfo
+  username: abc
+  password: def

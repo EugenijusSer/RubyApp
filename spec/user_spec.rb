@@ -77,13 +77,13 @@ describe User do
       user.create('bobby', 'house')
       user.create('john', 'wall')
       user.create('abc', 'def')
-      open('users.yml', 'w+').write('')
+      File.truncate('yml/users.yml', 0)
       user.save
     end
 
     it 'can be saved to file users.yml' do
-      actual = 'users.yml'
-      expect(actual).to be_identical_file_as('expected_users.yml')
+      actual = 'yml/users.yml'
+      expect(actual).to be_identical_file_as('yml/expected_users.yml')
     end
 
     it 'clears user list before tests' do
@@ -94,8 +94,14 @@ describe User do
     it 'can be loaded from file users.yml' do
       user.clear_user_list
       user.load
-      expected_users = YAML.load_file('expected_users.yml')
+      expected_users = YAML.load_file('yml/expected_users.yml')
       expect(user.users).to eq expected_users
+    end
+
+    it 'can be all displayed' do
+      expect { user.display_users }.to output(
+        "bobby - house\njohn - wall\nabc - def\n"
+      ).to_stdout
     end
   end
 

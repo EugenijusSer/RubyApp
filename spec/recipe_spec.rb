@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Recipe do
   let(:recipe) { described_class.new }
+  let(:new_recipe) { described_class.new(20, 55, 15) }
 
   context 'servings' do
     it 'set to 1 after creating' do
@@ -26,10 +27,11 @@ describe Recipe do
     end
 
     it 'can adjust nutrition according to servings' do
-      recipe = described_class.new(20, 55, 15)
-      recipe.change_servings(3)
-      recipe.adjust_nutrition
-      expect(recipe.nutrition.calories = recipe.calculate_calories).to be(1380)
+      new_recipe.change_servings(3)
+      new_recipe.adjust_nutrition
+      expect(new_recipe.calculate_calories).to be_equal_to_calculated_calories(
+        60, 165, 45
+      )
     end
   end
 
@@ -59,8 +61,8 @@ describe Recipe do
 
     it 'can calculate calories' do
       recipe = described_class.new(5, 7, 9)
-      expect(recipe.nutrition.calories = recipe.calculate_calories).to be(
-        109
+      expect(recipe.calculate_calories).to be_equal_to_calculated_calories(
+        5, 7, 9
       )
     end
   end

@@ -59,13 +59,13 @@ class User
   end
 
   def save
-    File.open('users.yml', 'w') do |file|
-      file.puts(users.to_yaml)
+    File.open('yml/users.yml', 'w') do |file|
+      file.write(users.to_yaml)
     end
   end
 
   def load
-    @users = YAML.load_file('users.yml')
+    @users = YAML.load_file('yml/users.yml')
   end
 
   def add_recipe(id, name)
@@ -80,6 +80,12 @@ class User
     recipes.each do |item|
       puts item.fetch(:id)
       puts item.fetch(:name)
+    end
+  end
+
+  def display_users
+    users.each do |user|
+      puts user.username + ' - ' + user.password
     end
   end
 end

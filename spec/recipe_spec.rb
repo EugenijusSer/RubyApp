@@ -4,6 +4,14 @@ describe Recipe do
   let(:recipe) { described_class.new }
   let(:new_recipe) { described_class.new(20, 55, 15) }
 
+  context 'create' do
+    it 'recipe can be created' do
+      recipe = described_class.new(5, 200, 50)
+      recipe.add_ingredient('rice', 200, 'g')
+      expect(recipe).to be_a_recipe
+    end
+  end
+
   context 'servings' do
     it 'set to 1 after creating' do
       expect(recipe.servings).to be(1)

@@ -91,17 +91,33 @@ describe User do
       expect(user.users).to eq []
     end
 
-    it 'can be loaded from file users.yml' do
-      user.clear_user_list
-      user.load
-      expected_users = YAML.load_file('yml/expected_users.yml')
-      expect(user.users).to eq expected_users
-    end
-
     it 'can be all displayed' do
       expect { user.display_users }.to output(
         "bobby - house\njohn - wall\nabc - def\n"
       ).to_stdout
+    end
+  end
+
+  context 'load' do
+    let(:expected_user) { described_class.new }
+
+    before do
+      user.clear_user_list
+      user.create('bobby', 'house')
+      user.create('john', 'wall')
+      user.create('abc', 'def')
+      File.truncate('yml/users.yml', 0)
+      user.save
+      user.clear_user_list
+      user.load
+      expected_user.clear_user_list
+      expected_user.create('bobby', 'house')
+      expected_user.create('john', 'wall')
+      expected_user.create('abc', 'def')
+    end
+
+    it 'can be loaded from file users.yml' do
+      expect(user.users).to eq(expected_user.users)
     end
   end
 
